@@ -1,0 +1,1 @@
+<?php namespace App\Http\Controllers; class DossierController extends Controller { public function show($numParticuliers) { return view('dossiers.show', [ 'numParticuliers' => $numParticuliers ]); } }
