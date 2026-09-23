@@ -7,14 +7,17 @@ use App\Http\Controllers\ParcelleController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
-Route::get('/dossiers/{numParticuliers}', [DossierController::class, 'show']);
+Route::get('/dossiers/{id}', [DossierController::class, 'show'])
+    ->name('dossiers.show');
 
-Route::get('/gererContrats/{numContrat}', [ContratController::class, 'show']);
+Route::get('/gererContrats/{id}', [ContratController::class, 'show'])
+    ->name('contrats.show');
 
-Route::get('/sites/parcelles/{numParcelle}', [ParcelleController::class, 'show']);
+Route::get('/sites/parcelles/{id}', [ParcelleController::class, 'show'])
+    ->name('parcelles.show');
 
 Route::fallback(function () {
-    return response()->view('welcome');
+    return redirect()->route('welcome');
 });
