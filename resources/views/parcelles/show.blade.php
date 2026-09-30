@@ -1,77 +1,107 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parcelle</title>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>Parcelle #{{ $parcelle->id }}</h1>
+@section('title', 'Parcelle')
 
-    <h2>Informations</h2>
+@section('content')
+
+    <h2>Parcelle</h2>
 
     <p>
-        <strong>Statut :</strong>
-        {{ $parcelle->statut }}
+        <strong>Numéro :</strong>
+        {{ $parcelle->id }}
     </p>
 
-    <h2>Site</h2>
+    <hr>
 
-    @if ($parcelle->site)
-        <p><strong>Nom :</strong> {{ $parcelle->site->nom }}</p>
-        <p><strong>Adresse :</strong> {{ $parcelle->site->adresse }}</p>
+    <div class="card">
 
-        <h3>Équipements du site</h3>
+        <h3>Informations</h3>
 
-        @forelse ($parcelle->site->equipementSites as $equipement)
-            <p>{{ $equipement->libelle }}</p>
-        @empty
-            <p>Aucun équipement.</p>
-        @endforelse
-    @endif
+        <p>
+            <strong>Statut :</strong>
+            {{ $parcelle->statut }}
+        </p>
 
-    <h2>Type de parcelle</h2>
-
-    @if ($parcelle->typeParcelle)
         <p>
             <strong>Type :</strong>
-            {{ $parcelle->typeParcelle->libelle }}
+            {{ $parcelle->typeParcelle?->libelle ?? 'Non renseigné' }}
         </p>
 
         <p>
             <strong>Superficie :</strong>
-            {{ $parcelle->typeParcelle->superficie }}
+            {{ $parcelle->typeParcelle?->superficie ?? 'Non renseignée' }}
         </p>
 
-        <h3>Prix par année</h3>
+    </div>
 
-        @forelse ($parcelle->typeParcelle->typeParcelleAnnees as $tarif)
+    <div class="card">
+
+        <h3>Site</h3>
+
+        <p>
+            <strong>Nom :</strong>
+            {{ $parcelle->site?->nom ?? 'Non renseigné' }}
+        </p>
+
+        <p>
+            <strong>Adresse :</strong>
+            {{ $parcelle->site?->adresse ?? 'Non renseignée' }}
+        </p>
+
+        <h4>Équipements du site</h4>
+
+        @forelse ($parcelle->site?->equipementSites ?? [] as $equipement)
+
+            <p>{{ $equipement->libelle }}</p>
+
+        @empty
+
+            <p>Aucun équipement.</p>
+
+        @endforelse
+
+    </div>
+
+    <div class="card">
+
+        <h3>Tarifs par année</h3>
+
+        @forelse ($parcelle->typeParcelle?->typeParcelleAnnees ?? [] as $tarif)
+
             <p>
-                {{ $tarif->annee->annee ?? 'N/A' }}
+                <strong>
+                    {{ $tarif->annee?->annee ?? 'Année inconnue' }}
+                </strong>
                 —
                 {{ number_format($tarif->prix, 2, ',', ' ') }} €
             </p>
+
         @empty
-            <p>Aucun tarif.</p>
+
+            <p>Aucun tarif enregistré.</p>
+
         @endforelse
-    @endif
 
-    <h2>Locations</h2>
+    </div>
 
-    @forelse ($parcelle->locations as $location)
-        <p>
-            Location #{{ $location->id }}
-            — Client #{{ $location->client->id ?? 'N/A' }}
-            — {{ $location->date?->format('d/m/Y') }}
-        </p>
-    @empty
-        <p>Aucune location.</p>
-    @endforelse
+    <div class="card">
 
-    <p>
-        <a href="{{ route('welcome') }}">Retour à l'accueil</a>
-    </p>
+        <h3>Locations</h3>
 
-</body>
-</html>
+        @forelse ($parcelle->locations as $location)
+
+            <p>
+                Location #{{ $location->id }}
+                — Client #{{ $location->client?->id ?? 'inconnu' }}
+                — {{ $location->equipement?->libelle ?? 'Équipement inconnu' }}
+            </p>
+
+        @empty
+
+            <p>Aucune location.</p>
+
+        @endforelse
+
+    </div>
+
+@endsection

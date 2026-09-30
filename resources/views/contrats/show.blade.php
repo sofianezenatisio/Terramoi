@@ -1,65 +1,84 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contrat</title>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>Contrat / Location #{{ $location->id }}</h1>
+@section('title', 'Contrat')
 
-    <h2>Informations</h2>
+@section('content')
+
+    <h2>Contrat de location</h2>
 
     <p>
-        <strong>Date :</strong>
-        {{ $location->date?->format('d/m/Y') }}
+        <strong>Numéro du contrat :</strong>
+        {{ $location->id }}
     </p>
 
-    <p>
-        <strong>Date de location :</strong>
-        {{ $location->date_location?->format('d/m/Y') ?? 'Non renseignée' }}
-    </p>
+    <hr>
 
-    <p>
-        <strong>Date de paiement :</strong>
-        {{ $location->date_paiement?->format('d/m/Y') ?? 'Non renseignée' }}
-    </p>
+    <div class="card">
 
-    <h2>Client</h2>
+        <h3>Client</h3>
 
-    <p>Client #{{ $location->client->id }}</p>
+        <p>
+            Numéro :
+            {{ $location->client?->id ?? 'Non renseigné' }}
+        </p>
 
-    <h2>Équipement</h2>
+    </div>
 
-    <p>
-        {{ $location->equipement->libelle ?? 'Non renseigné' }}
-    </p>
+    <div class="card">
 
-    <h2>Parcelle</h2>
+        <h3>Location</h3>
 
-    @if ($location->parcelle)
-        <p>Parcelle #{{ $location->parcelle->id }}</p>
+        <p>
+            <strong>Date :</strong>
+            {{ $location->date?->format('d/m/Y') }}
+        </p>
+
+        <p>
+            <strong>Date de location :</strong>
+            {{ $location->date_location?->format('d/m/Y') ?? 'Non renseignée' }}
+        </p>
+
+        <p>
+            <strong>Date de paiement :</strong>
+            {{ $location->date_paiement?->format('d/m/Y') ?? 'Non renseignée' }}
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Équipement</h3>
+
+        <p>
+            {{ $location->equipement?->libelle ?? 'Non renseigné' }}
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Parcelle</h3>
+
+        <p>
+            <strong>Numéro :</strong>
+            {{ $location->parcelle?->id ?? 'Non renseignée' }}
+        </p>
 
         <p>
             <strong>Statut :</strong>
-            {{ $location->parcelle->statut }}
+            {{ $location->parcelle?->statut ?? 'Non renseigné' }}
         </p>
 
         <p>
             <strong>Site :</strong>
-            {{ $location->parcelle->site->nom ?? 'Non renseigné' }}
+            {{ $location->parcelle?->site?->nom ?? 'Non renseigné' }}
         </p>
 
         <p>
             <strong>Type :</strong>
-            {{ $location->parcelle->typeParcelle->libelle ?? 'Non renseigné' }}
+            {{ $location->parcelle?->typeParcelle?->libelle ?? 'Non renseigné' }}
         </p>
-    @endif
 
-    <p>
-        <a href="{{ route('welcome') }}">Retour à l'accueil</a>
-    </p>
+    </div>
 
-</body>
-</html>
+@endsection

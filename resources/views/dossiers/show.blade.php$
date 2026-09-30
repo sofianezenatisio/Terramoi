@@ -6,12 +6,9 @@
 
     <h2>Dossier du client</h2>
 
-    <div class="card">
-        <p>
-            <strong>Numéro du client :</strong>
-            {{ $client->id }}
-        </p>
-    </div>
+    <p><strong>Numéro du client :</strong> {{ $client->id }}</p>
+
+    <hr>
 
     <h3>Locations</h3>
 
@@ -48,9 +45,7 @@
 
     @empty
 
-        <div class="card">
-            <p>Aucune location pour ce client.</p>
-        </div>
+        <p>Aucune location pour ce client.</p>
 
     @endforelse
 
@@ -86,9 +81,7 @@
 
     @empty
 
-        <div class="card">
-            <p>Aucune demande pour ce client.</p>
-        </div>
+        <p>Aucune demande pour ce client.</p>
 
     @endforelse
 
