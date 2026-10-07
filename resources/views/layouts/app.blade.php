@@ -10,10 +10,34 @@
 
 <header>
     <h1>Terramoi</h1>
+<nav>
 
-    <nav>
-        <a href="{{ route('welcome') }}">Accueil</a>
-    </nav>
+    <a href="{{ route('welcome') }}">
+        Accueil
+    </a>
+
+    @auth
+
+        @if (auth()->user()->role === 'admin')
+
+            <a href="{{ route('admin.dashboard') }}">
+                Administration
+            </a>
+
+        @endif
+
+        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+            @csrf
+
+            <button type="submit">
+                Se déconnecter
+            </button>
+        </form>
+
+    @endauth
+
+</nav>
+
 </header>
 
 <main>

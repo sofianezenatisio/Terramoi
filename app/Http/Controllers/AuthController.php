@@ -20,14 +20,17 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+
             $request->session()->regenerate();
 
             return redirect()->route('welcome');
         }
 
-        return back()->withErrors([
-            'email' => 'Les identifiants sont incorrects.',
-        ])->onlyInput('email');
+        return back()
+            ->withErrors([
+                'email' => 'Les identifiants sont incorrects.',
+            ])
+            ->onlyInput('email');
     }
 
     public function logout(Request $request)
@@ -35,6 +38,7 @@ class AuthController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
 
         return redirect()->route('login');

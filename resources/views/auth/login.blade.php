@@ -4,15 +4,25 @@
 
 @section('content')
 
-    <h2>Connexion</h2>
+    <section class="hero">
 
-    <form method="POST" action="{{ route('login') }}">
+        <h2>Connexion à Terramoi</h2>
+
+        <p>
+            Connectez-vous pour accéder à votre espace.
+        </p>
+
+    </section>
+
+    <form method="POST" action="{{ route('login.post') }}">
+
         @csrf
 
         <div class="card">
 
             <p>
                 <label for="email">Email</label><br>
+
                 <input
                     type="email"
                     id="email"
@@ -24,6 +34,7 @@
 
             <p>
                 <label for="password">Mot de passe</label><br>
+
                 <input
                     type="password"
                     id="password"
