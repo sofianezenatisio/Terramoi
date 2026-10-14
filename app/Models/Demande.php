@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Demande extends Model
 {
-    protected $fillable = [
-        'client_id',
-        'consultation',
-    ];
-
+protected $fillable = [
+    'client_id',
+    'consultation',
+    'statut',
+];
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);

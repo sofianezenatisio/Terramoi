@@ -3,16 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Equipement extends Model
 {
     protected $fillable = [
         'libelle',
+        'tarif_mensuel',
     ];
 
-    public function locations(): HasMany
+    public function locations(): BelongsToMany
     {
-        return $this->hasMany(Location::class);
+        return $this->belongsToMany(
+            Location::class,
+            'location_equipement'
+        )->withTimestamps();
     }
 }

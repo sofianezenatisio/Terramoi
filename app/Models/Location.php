@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Location extends Model
 {
@@ -12,7 +13,6 @@ class Location extends Model
         'date_paiement',
         'date_location',
         'client_id',
-        'equipement_id',
         'parcelle_id',
     ];
 
@@ -27,9 +27,12 @@ class Location extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function equipement(): BelongsTo
+    public function equipements(): BelongsToMany
     {
-        return $this->belongsTo(Equipement::class);
+        return $this->belongsToMany(
+            Equipement::class,
+            'location_equipement'
+        )->withTimestamps();
     }
 
     public function parcelle(): BelongsTo
